@@ -3,6 +3,8 @@ package zzz.akka.avionics
 import akka.actor.{Props, ActorSystem}
 import akka.testkit.{TestKit, TestActorRef, ImplicitSender}
 
+import com.typesafe.config.ConfigFactory
+
 import org.scalatest.WordSpec
 import org.scalatest.matchers.MustMatchers
 
@@ -12,7 +14,11 @@ object TestFlightAttendant {
 	}
 }
 
-class FlightAttendantSpec extends TestKit(ActorSystem("FlightAttendantSpec"))
+class FlightAttendantSpec extends TestKit(
+	ActorSystem(
+		"FlightAttendantSpec", 
+		ConfigFactory.parseString("akka.scheduler.tick-duration = 1ms")
+	))
 	with ImplicitSender
 	with WordSpec
 	with MustMatchers {
